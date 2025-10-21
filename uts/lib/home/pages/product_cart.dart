@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:uts/cart/pages/shopping_cart_page.dart';
 import 'package:uts/data/models/product_model.dart';
 import 'package:uts/home/pages/detail_product_page.dart';
 import '../../theme/colors.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
+  final List<Map<String, dynamic>> cartItems;
 
-  const ProductCard({super.key, required this.product});
+  const ProductCard({
+    super.key,
+    required this.product,
+    required this.cartItems,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +47,8 @@ class ProductCard extends StatelessWidget {
                       height: 90,
                       width: 90,
                       decoration: BoxDecoration(
-color: (product.backgroundColor ?? _getCircleColor(product.name))
-    .withValues(alpha: (0.3)),
-
+                        color: (product.backgroundColor ?? _getCircleColor(product.name))
+                            .withValues(alpha: .3),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -77,27 +82,51 @@ color: (product.backgroundColor ?? _getCircleColor(product.name))
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 const SizedBox(height: 15),
-                Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    border: Border(top: BorderSide(color: Color(0xFFF2F2F2))),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.shopping_bag_outlined,
-                          size: 18, color: Color(0xFF6DC36E)),
-                      SizedBox(width: 6),
-                      Text(
-                        "Add to cart",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                        ),
+                GestureDetector(
+                  onTap: () {
+                    cartItems.add({
+                      "id": product.id,
+                      "name": product.name,
+                      "weight": product.unit,
+                      "price": double.tryParse(
+                              product.price.replaceAll("\$", "")) ??
+                          0,
+                      "image": product.image,
+                      "circleColor":
+                          product.backgroundColor ?? _getCircleColor(product.name),
+                      "quantity": 1,
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            ShoppingCartPage(cartItems: cartItems),
                       ),
-                    ],
+                    );
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      border: Border(top: BorderSide(color: Color(0xFFF2F2F2))),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.shopping_bag_outlined,
+                            size: 18, color: Color(0xFF6DC36E)),
+                        SizedBox(width: 6),
+                        Text(
+                          "Add to cart",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -105,7 +134,8 @@ color: (product.backgroundColor ?? _getCircleColor(product.name))
             if (product.isNew)
               Positioned(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   color: const Color.fromARGB(255, 253, 244, 213),
                   child: const Text(
                     "NEW",
@@ -131,6 +161,8 @@ color: (product.backgroundColor ?? _getCircleColor(product.name))
         return const Color(0xFF6DC36E);
       case 'organic lemons':
         return const Color.fromARGB(255, 77, 184, 79);
+      case 'apple':
+        return Colors.redAccent;
       default:
         return AppColors.primary;
     }

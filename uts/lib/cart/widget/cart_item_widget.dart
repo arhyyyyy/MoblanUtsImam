@@ -24,7 +24,7 @@ class CartItemWidget extends StatelessWidget {
           color: Colors.redAccent,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: const Icon(Icons.delete, color: Colors.white),
+        child: const Icon(Icons.delete_outline_outlined, color: Colors.white),
       ),
       onDismissed: (_) => onRemove(),
       child: Container(
@@ -44,7 +44,6 @@ class CartItemWidget extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Gambar produk
             Container(
               height: 60,
               width: 60,
@@ -58,8 +57,6 @@ class CartItemWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-
-            // Nama & detail
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,8 +76,6 @@ class CartItemWidget extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Tombol kuantitas vertikal
             Column(
               children: [
                 IconButton(

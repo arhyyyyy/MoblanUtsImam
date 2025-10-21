@@ -15,7 +15,7 @@ class AddToCartButton extends StatelessWidget {
     required this.harga,
     required this.gambar,
     required this.jumlah,
-    this.backgroundColor,
+    this.backgroundColor, required Null Function() onAdd,
   });
 
   @override

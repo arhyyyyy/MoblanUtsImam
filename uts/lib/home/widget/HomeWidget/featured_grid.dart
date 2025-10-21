@@ -1,47 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:uts/data/models/product_model.dart';
+import 'package:uts/data/models/product_data.dart';
 import 'package:uts/home/pages/product_cart.dart';
 
-class FeaturedGrid extends StatelessWidget {
-  const FeaturedGrid({super.key});
+class FeaturedGrid extends StatefulWidget {
+  final String? category;
+
+  const FeaturedGrid({super.key, this.category});
+
+  @override
+  State<FeaturedGrid> createState() => _FeaturedGridState();
+}
+
+class _FeaturedGridState extends State<FeaturedGrid> {
+  final List<Map<String, dynamic>> cartItems = [];
+  late final List<ProductModel> products;
+
+  @override
+  void initState() {
+    super.initState();
+    // Ambil produk sesuai kategori, atau semua produk jika category null
+    products = widget.category != null
+        ? ProductData.getProductsByCategory(widget.category!)
+        : ProductData.allProducts;
+  }
 
   @override
   Widget build(BuildContext context) {
-    // 🔹 Daftar produk menggunakan ProductModel
-    final List<ProductModel> products = [
-      ProductModel(
-        id: "1",
-        name: "Fresh Peach",
-        price: "\$8.00",
-        unit: "dozen",
-        image: "images/Peach.png",
-        description:
-            "Sweet and juicy fresh peaches, perfect for a healthy breakfast or snack.",
-        isNew: false,
-      ),
-      ProductModel(
-        id: "2",
-        name: "Avocado",
-        price: "\$7.00",
-        unit: "2.0 lbs",
-        image: "images/Alvokat.png",
-        description:
-            "Rich, creamy avocados filled with nutrients — ideal for smoothies or salads.",
-        isNew: true,
-      ),
-      ProductModel(
-        id: "3",
-        name: "Organic Lemons",
-        price: "\$2.22",
-        unit: "1.50 lbs",
-        image: "images/Lemon.png",
-        description:
-            "Fresh organic lemons, great for cooking, juicing, or refreshing drinks.",
-        isNew: true,
-      ),
-    ];
+    if (products.isEmpty) {
+      return const Center(
+        child: Text(
+          "No products found",
+          style: TextStyle(fontSize: 16, color: Colors.grey),
+        ),
+      );
+    }
 
-    // 🔹 Menampilkan grid produk
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -54,7 +48,10 @@ class FeaturedGrid extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final product = products[index];
-        return ProductCard(product: product);
+        return ProductCard(
+          product: product,
+          cartItems: cartItems,
+        );
       },
     );
   }

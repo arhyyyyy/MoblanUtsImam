@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                   _rememberMe = value;
                                 });
                               },
-                              activeColor: Colors.white,
+                              activeThumbColor: Colors.white,
                               activeTrackColor: AppColors.primary,
                               inactiveThumbColor: Colors.white,
                               inactiveTrackColor: Colors.grey.shade300,
