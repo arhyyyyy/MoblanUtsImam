@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -17,6 +18,35 @@ class _HomeBannerState extends State<HomeBanner> {
   ];
 
   int _currentIndex = 0;
+  Timer? _autoSlideTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoSlide();
+  }
+
+  @override
+  void dispose() {
+    _autoSlideTimer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _startAutoSlide() {
+    _autoSlideTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_controller.hasClients) {
+        int nextPage = _currentIndex + 1;
+        if (nextPage >= _images.length) nextPage = 0;
+
+        _controller.animateToPage(
+          nextPage,
+          duration: const Duration(milliseconds: 600),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,19 +85,14 @@ class _HomeBannerState extends State<HomeBanner> {
                   Positioned(
                     left: 20,
                     bottom: 35,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          '20% off on your\nfirst purchase',
-                          style: TextStyle(
-                            color: AppColors.textDark,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            height: 1.3,
-                          ),
-                        ),
-                      ],
+                    child: const Text(
+                      '20% off on your\nfirst purchase',
+                      style: TextStyle(
+                        color: AppColors.textDark,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        height: 1.3,
+                      ),
                     ),
                   ),
                 ],
@@ -77,7 +102,7 @@ class _HomeBannerState extends State<HomeBanner> {
           Positioned(
             bottom: 12,
             left: 0,
-            right: 250,
+            right: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -89,7 +114,7 @@ class _HomeBannerState extends State<HomeBanner> {
                   width: _currentIndex == index ? 18 : 8,
                   decoration: BoxDecoration(
                     color: _currentIndex == index
-                        ? AppColors.primary
+                        ? AppColors.primaryDark
                         : Colors.white.withValues(alpha: .5),
                     borderRadius: BorderRadius.circular(4),
                   ),

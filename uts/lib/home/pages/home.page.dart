@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uts/home/pages/category_page.dart';
 import 'package:uts/home/widget/category/category_list.dart';
 import 'package:uts/home/widget/HomeWidget/featured_grid.dart';
-import 'package:uts/home/widget/HomeWidget/floating_cart_button.dart';
+import 'package:uts/home/widget/HomeWidget/home_button.dart';
 import 'package:uts/home/widget/HomeWidget/home_banner.dart';
 import 'package:uts/home/widget/HomeWidget/home_search_bar.dart';
 import 'package:uts/home/widget/HomeWidget/home_section_title.dart';

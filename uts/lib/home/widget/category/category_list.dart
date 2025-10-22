@@ -48,7 +48,6 @@ class CategoryList extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     child: Center(
-                      // ✅ Panggil fungsi icon dari file data
                       child: item['icon'](item['color']),
                     ),
                   ),

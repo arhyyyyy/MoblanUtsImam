@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uts/auth/login.dart';
+import 'package:uts/auth/welcome_page.dart';
 import 'package:uts/theme/colors.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -54,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _goToLogin() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const LoginPage()),
+      MaterialPageRoute(builder: (_) => const WelcomePage()),
     );
   }
 

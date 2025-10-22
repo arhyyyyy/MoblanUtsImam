@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:uts/cart/pages/shopping_cart_page.dart';
+import 'package:uts/theme/colors.dart';
+import 'package:uts/data/favorite_manager.dart';
 import 'package:uts/data/models/product_model.dart';
+import 'package:uts/cart/pages/shopping_cart_page.dart';
 import 'package:uts/home/pages/detail_product_page.dart';
 import 'package:uts/home/widget/produk/produk_add_button.dart';
-import 'package:uts/theme/colors.dart';
 
 class ProductCard extends StatefulWidget {
   final ProductModel product;
@@ -20,7 +21,13 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  bool isFavorite = false;
+  late bool isFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavorite = FavoriteManager.isFavorite(widget.product);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,6 @@ class _ProductCardState extends State<ProductCard> {
     final cartItems = widget.cartItems;
 
     return GestureDetector(
-      // Gunakan GestureDetector agar bisa deteksi tap di child tanpa overlap
       onTap: () {
         Navigator.push(
           context,
@@ -40,16 +46,16 @@ class _ProductCardState extends State<ProductCard> {
           ),
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey[200]!, width: 1.5),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Column(
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey[200]!, width: 1.5),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 15),
@@ -57,7 +63,6 @@ class _ProductCardState extends State<ProductCard> {
                   alignment: Alignment.center,
                   clipBehavior: Clip.none,
                   children: [
-                    // Lingkaran background
                     Container(
                       height: 90,
                       width: 90,
@@ -68,34 +73,10 @@ class _ProductCardState extends State<ProductCard> {
                         shape: BoxShape.circle,
                       ),
                     ),
-                    // Gambar produk
-                    Image.asset(product.image,
-                        height: 80, fit: BoxFit.contain),
-
-                    // Tombol Favorite
-                    Positioned(
-                      top: -5,
-                      right: -40,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(50),
-                          onTap: () {
-                            setState(() => isFavorite = !isFavorite);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              isFavorite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color:
-                                  isFavorite ? Colors.red : Colors.grey[400],
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
+                    Image.asset(
+                      product.image,
+                      height: 80,
+                      fit: BoxFit.contain,
                     ),
                   ],
                 ),
@@ -139,34 +120,40 @@ class _ProductCardState extends State<ProductCard> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) =>
-                            ShoppingCartPage(cartItems: cartItems),
+                        builder: (_) => ShoppingCartPage(cartItems: cartItems),
                       ),
                     );
                   },
                 ),
               ],
             ),
-            if (product.isNew)
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  color: const Color.fromARGB(255, 253, 244, 213),
-                  child: const Text(
-                    "NEW",
-                    style: TextStyle(
-                      color: Colors.orangeAccent,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                    ),
+          ),
+          // ❤️ Button
+          Positioned(
+            top: 8,
+            right: 8,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(50),
+                onTap: () {
+                  setState(() {
+                    FavoriteManager.toggleFavorite(product);
+                    isFavorite = !isFavorite;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite ? Colors.red : Colors.grey[400],
+                    size: 28,
                   ),
                 ),
               ),
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
