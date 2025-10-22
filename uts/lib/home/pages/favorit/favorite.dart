@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:uts/data/favorite_manager.dart';
 import 'package:uts/data/models/product_model.dart';
-import 'package:uts/home/widget/HomeWidget/home.page.dart';
+import 'package:uts/home/pages/home.page.dart';
 import 'package:uts/theme/colors.dart';
 
 class FavoritePage extends StatefulWidget {

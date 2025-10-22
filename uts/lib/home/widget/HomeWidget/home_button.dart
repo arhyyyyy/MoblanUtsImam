@@ -5,20 +5,28 @@ import 'package:uts/home/pages/home.page.dart';
 import 'package:uts/home/pages/profile/profile.dart';
 
 class FloatingCartButton extends StatefulWidget {
-  const FloatingCartButton({super.key});
+  final int initialIndex;
+
+  const FloatingCartButton({super.key, this.initialIndex = 0});
 
   @override
   State<FloatingCartButton> createState() => _FloatingCartButtonState();
 }
 
 class _FloatingCartButtonState extends State<FloatingCartButton> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   final List<Widget> _pages = const [
     HomePage(),
     ProfilePage(),
     FavoritePage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex; 
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -35,7 +43,6 @@ class _FloatingCartButtonState extends State<FloatingCartButton> {
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
-      alignment: Alignment.center,
       children: [
         Container(
           decoration: const BoxDecoration(
@@ -56,32 +63,42 @@ class _FloatingCartButtonState extends State<FloatingCartButton> {
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: const Color(0xFF4CAF50),
-            unselectedItemColor: Colors.grey,
             backgroundColor: Colors.white,
             elevation: 0,
-            items: const [
+            selectedFontSize: 0,
+            unselectedFontSize: 0,
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
+                icon: Icon(
+                  Icons.home_outlined,
+                  color: _selectedIndex == 0
+                      ? const Color(0xFF4CAF50)
+                      : Colors.grey,
+                ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline),
+                icon: Icon(
+                  Icons.person_outline,
+                  color: _selectedIndex == 1
+                      ? const Color(0xFF4CAF50)
+                      : Colors.grey,
+                ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_border),
+                icon: Icon(
+                  Icons.favorite_border,
+                ),
                 label: '',
               ),
-              BottomNavigationBarItem(
-                icon: SizedBox.shrink(),
+              const BottomNavigationBarItem(
+                icon: SizedBox(width: 60), 
                 label: '',
               ),
             ],
           ),
         ),
-
-        // Floating cart button
         Positioned(
           bottom: 35,
           right: 30,
@@ -90,7 +107,8 @@ class _FloatingCartButtonState extends State<FloatingCartButton> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const ShoppingCartPage()),
+                  builder: (context) => const ShoppingCartPage(),
+                ),
               );
             },
             child: Container(

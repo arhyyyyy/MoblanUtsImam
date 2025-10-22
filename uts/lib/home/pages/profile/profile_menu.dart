@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uts/auth/login.dart';
+import 'package:uts/home/pages/favorit/Favorite.dart';
+import 'package:uts/home/pages/profile/menu/about_me.dart';
+import 'package:uts/home/pages/profile/menu/my_address.dart';
+import 'package:uts/home/pages/profile/menu/order_page.dart';
 import 'package:uts/theme/colors.dart';
 
 class ProfileMenuList extends StatelessWidget {
@@ -8,10 +12,18 @@ class ProfileMenuList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<_ProfileItem> items = [
-      _ProfileItem(Icons.person_outline, 'About me', () {}),
-      _ProfileItem(Icons.shopping_bag_outlined, 'My Orders', () {}),
-      _ProfileItem(Icons.favorite_border, 'My Favorites', () {}),
-      _ProfileItem(Icons.location_on_outlined, 'My Address', () {}),
+      _ProfileItem(Icons.person_outline, 'About me', () {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const AboutMePage()), (route) => false);
+      }),
+      _ProfileItem(Icons.shopping_bag_outlined, 'My Orders', () {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const MyOrderPage()), (route) => false);
+      }),
+      _ProfileItem(Icons.favorite_border, 'My Favorites', () {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const FavoritePage()), (route) => false);
+      }),
+      _ProfileItem(Icons.location_on_outlined, 'My Address', () {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const MyAddressPage()), (route) => false);
+      }),
       _ProfileItem(Icons.credit_card_outlined, 'Credit Cards', () {}),
       _ProfileItem(Icons.swap_horiz_outlined, 'Transactions', () {}),
       _ProfileItem(Icons.notifications_none_outlined, 'Notifications', () {}),

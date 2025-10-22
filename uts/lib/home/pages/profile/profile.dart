@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:uts/home/widget/HomeWidget/home_button.dart';
-import 'package:uts/home/widget/profile/profile_header.dart';
-import 'package:uts/home/widget/profile/profile_menu.dart';
+import 'package:uts/home/pages/profile/profile_header.dart';
+import 'package:uts/home/pages/profile/profile_menu.dart';
 import 'package:uts/theme/colors.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final int selectedIndex;
+  const ProfilePage({super.key, this.selectedIndex = 1});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       // Gunakan widget floating button dari file terpisah
-      bottomNavigationBar: const FloatingCartButton(),
+      bottomNavigationBar: const FloatingCartButton(initialIndex: 1),
     );
   }
 }

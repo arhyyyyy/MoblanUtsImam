@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uts/data/models/product_model.dart';
 import 'package:uts/data/models/product_data.dart';
-import 'package:uts/home/widget/HomeWidget/home.page.dart';
+import 'package:uts/home/pages/home.page.dart';
 import 'package:uts/home/widget/produk/product_cart.dart';
 
 class FeaturedProductPage extends StatefulWidget {
