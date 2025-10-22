@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/auth/registrasi.dart';
 import 'package:uts/auth/verify_otp.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -21,7 +22,12 @@ class _VerifyNumberPageState extends State<VerifyNumberPage> {
         backgroundColor: const Color(0xFFF7F8FA),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context) => const RegistrasiPage()),
+                (route) => false            
+            );
+          },
         ),
         centerTitle: true,
         title: const Text(

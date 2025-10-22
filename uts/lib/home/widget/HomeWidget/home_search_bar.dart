@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uts/home/pages/search_page.dart';
+import 'package:uts/home/pages/filter_page.dart'; // <--- tambahkan
 import 'package:uts/theme/colors.dart';
 
 class HomeSearchBar extends StatelessWidget {
@@ -23,26 +25,39 @@ class HomeSearchBar extends StatelessWidget {
         children: [
           const Icon(Icons.search, color: Colors.grey),
           const SizedBox(width: 10),
-          const Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search keywords...',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: InputBorder.none,
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SearchPage()),
+                );
+              },
+              child: const Text(
+                'Search keywords...',
+                style: TextStyle(color: Colors.grey),
               ),
             ),
           ),
-          Container(
-            height: 32,
-            width: 32,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(
-              Icons.tune,
-              color: Color(0xFF808080),
-              size: 20,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FilterPage()),
+              );
+            },
+            child: Container(
+              height: 32,
+              width: 32,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF5F5F5),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(
+                Icons.tune,
+                color: Color(0xFF808080),
+                size: 20,
+              ),
             ),
           ),
         ],

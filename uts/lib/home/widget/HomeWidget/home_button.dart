@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uts/cart/pages/shopping_cart_page.dart';
-import 'package:uts/favorit/favorite.dart';
+import 'package:uts/home/pages/favorit/Favorite.dart';
 import 'package:uts/home/pages/home.page.dart';
-import 'package:uts/profile/profile.dart';
+import 'package:uts/home/pages/profile/profile.dart';
 
 class FloatingCartButton extends StatefulWidget {
   const FloatingCartButton({super.key});
@@ -14,7 +14,6 @@ class FloatingCartButton extends StatefulWidget {
 class _FloatingCartButtonState extends State<FloatingCartButton> {
   int _selectedIndex = 0;
 
-  // daftar halaman
   final List<Widget> _pages = const [
     HomePage(),
     ProfilePage(),

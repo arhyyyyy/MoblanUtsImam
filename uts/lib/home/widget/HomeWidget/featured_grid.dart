@@ -19,7 +19,6 @@ class _FeaturedGridState extends State<FeaturedGrid> {
   @override
   void initState() {
     super.initState();
-    // Ambil produk sesuai kategori, atau semua produk jika category null
     products = widget.category != null
         ? ProductData.getProductsByCategory(widget.category!)
         : ProductData.allProducts;

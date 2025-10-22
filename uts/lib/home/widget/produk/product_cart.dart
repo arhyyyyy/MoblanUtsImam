@@ -53,14 +53,7 @@ class _ProductCardState extends State<ProductCard> {
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(color: Colors.grey[200]!, width: 1.5),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
-                  blurRadius: 6,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,7 +69,7 @@ class _ProductCardState extends State<ProductCard> {
                       decoration: BoxDecoration(
                         color: (product.backgroundColor ??
                                 _getCircleColor(product.name))
-                            .withValues(alpha: 0.25),
+                            .withValues(alpha: .3),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -87,7 +80,6 @@ class _ProductCardState extends State<ProductCard> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 10),
                 Text(
                   product.price,
@@ -99,7 +91,6 @@ class _ProductCardState extends State<ProductCard> {
                 ),
                 Text(
                   product.name,
-                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -110,7 +101,6 @@ class _ProductCardState extends State<ProductCard> {
                   product.unit,
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
-
                 const SizedBox(height: 15),
                 ProductAddButton(
                   onPressed: () {
@@ -138,46 +128,6 @@ class _ProductCardState extends State<ProductCard> {
               ],
             ),
           ),
-          if (product.isNew)
-            Positioned(
-              top: 6,
-              left: 6,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                ),
-                child: const Text(
-                  "NEW",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          if (product.discount != null)
-            Positioned(
-              top: 6,
-              left: 6,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                ),
-                child: Text(
-                  "-${product.discount}%",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
           Positioned(
             top: 8,
             right: 8,
@@ -196,7 +146,7 @@ class _ProductCardState extends State<ProductCard> {
                   child: Icon(
                     isFavorite ? Icons.favorite : Icons.favorite_border,
                     color: isFavorite ? Colors.red : Colors.grey[400],
-                    size: 26,
+                    size: 28,
                   ),
                 ),
               ),

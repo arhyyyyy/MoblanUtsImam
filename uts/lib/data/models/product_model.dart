@@ -11,6 +11,7 @@ class ProductModel {
   final double rating;
   final int ulasan;
   final Color? backgroundColor;
+  final String? discount;
 
   ProductModel({
     required this.id,
@@ -23,5 +24,6 @@ class ProductModel {
     this.rating = 4.5,
     this.ulasan = 89,
     this.backgroundColor,
+    this.discount
   });
 }

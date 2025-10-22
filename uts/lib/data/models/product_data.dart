@@ -35,7 +35,7 @@ class ProductData {
             unit: '5.2 lbs',
             image: 'images/Apel.png',
             description: 'Sweet and juicy fresh peaches',
-            isNew: false,
+            isNew: true,
             backgroundColor: Colors.red,
           ),
           ProductModel(
@@ -80,6 +80,7 @@ class ProductData {
             description: 'Fresh vagetables',
             isNew: true,
             backgroundColor: Colors.green,
+            discount: '5',
           ),
           ProductModel(
             id: '7',

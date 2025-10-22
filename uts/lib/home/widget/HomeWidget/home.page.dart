@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:uts/home/pages/category_page.dart';
 import 'package:uts/home/pages/featured_product_page.dart';
-import 'package:uts/home/widget/category/category_list.dart';
 import 'package:uts/home/widget/HomeWidget/featured_grid.dart';
-import 'package:uts/home/widget/HomeWidget/home_button.dart';
 import 'package:uts/home/widget/HomeWidget/home_banner.dart';
+import 'package:uts/home/widget/HomeWidget/home_button.dart';
 import 'package:uts/home/widget/HomeWidget/home_search_bar.dart';
 import 'package:uts/home/widget/HomeWidget/home_section_title.dart';
+import 'package:uts/home/widget/category/category_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -35,15 +35,13 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 15),
             const CategoryList(),
             const SizedBox(height: 30),
-            HomeSectionTitle(
-          title: 'Featured Products',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const FeaturedProductPage()),
-            );
-          },
-        ),
+            HomeSectionTitle(title: 'Featured Products',
+            onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const FeaturedProductPage()),
+                );
+              },),
             const SizedBox(height: 15),
             const FeaturedGrid(),
           ],
