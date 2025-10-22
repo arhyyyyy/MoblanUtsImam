@@ -17,24 +17,46 @@ class _SplashScreenState extends State<SplashScreen> {
     {
       'image': 'images/Splash.png',
       'title': 'Premium Food\nAt Your Doorstep',
-      'subtitle': 'Lorem ipsum dolor sit amet, consectetur sadipscing elitr, sed diam nonumy.',
+      'subtitle':
+          'Lorem ipsum dolor sit amet, consectetur sadipscing elitr, sed diam nonumy.',
     },
     {
       'image': 'images/Splash2.png',
       'title': 'Buy Premium\nQuality Fruits',
-      'subtitle': 'Lorem ipsum dolor sit amet, consectetur sadipscing elitr, sed diam nonumy.',
+      'subtitle':
+          'Lorem ipsum dolor sit amet, consectetur sadipscing elitr, sed diam nonumy.',
     },
     {
       'image': 'images/Splash3.png',
       'title': 'Fast Delivery\nTo Your Home',
-      'subtitle': 'Lorem ipsum dolor sit amet, consectetur sadipscing elitr, sed diam nonumy.',
+      'subtitle':
+          'Lorem ipsum dolor sit amet, consectetur sadipscing elitr, sed diam nonumy.',
     },
     {
       'image': 'images/Splash4.png',
-      'title': 'Fast Delivery\nTo Your Home',
-      'subtitle': 'Lorem ipsum dolor sit amet, consectetur sadipscing elitr, sed diam nonumy.',
+      'title': 'Fresh Vegetables\nEvery Morning',
+      'subtitle':
+          'Lorem ipsum dolor sit amet, consectetur sadipscing elitr, sed diam nonumy.',
     },
   ];
+
+  void _nextPage() {
+    if (_currentPage < splashData.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOutCubic,
+      );
+    } else {
+      _goToLogin();
+    }
+  }
+
+  void _goToLogin() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +66,11 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           PageView.builder(
             controller: _pageController,
-            itemCount: splashData.length,
             onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
+              setState(() => _currentPage = index);
             },
+            itemCount: splashData.length,
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final item = splashData[index];
               return Stack(
@@ -74,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 50),
+                      padding: const EdgeInsets.only(bottom: 90),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -111,8 +132,9 @@ class _SplashScreenState extends State<SplashScreen> {
                             children: List.generate(
                               splashData.length,
                               (index) => AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                margin: const EdgeInsets.symmetric(horizontal: 4),
+                                duration: const Duration(milliseconds: 350),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
                                 height: 8,
                                 width: _currentPage == index ? 18 : 8,
                                 decoration: BoxDecoration(
@@ -120,49 +142,6 @@ class _SplashScreenState extends State<SplashScreen> {
                                       ? const Color(0xFF56AB2F)
                                       : Colors.grey[300],
                                   borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 35),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 32),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (_) => const LoginPage()),
-                                );
-                              },
-                              child: Container(
-                                width: double.infinity,
-                                height: 55,
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      AppColors.primary,
-                                      AppColors.primaryDark,
-                                    ],
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0xFF56AB2F).withValues(alpha: .3),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  "Get started",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
                                 ),
                               ),
                             ),
@@ -175,11 +154,55 @@ class _SplashScreenState extends State<SplashScreen> {
               );
             },
           ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 30, left: 32, right: 32),
+              child: GestureDetector(
+                onTap: _nextPage,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOutCubic,
+                  width: double.infinity,
+                  height: 55,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        AppColors.primary,
+                        AppColors.primaryDark,
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF56AB2F).withValues(alpha: .3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    _currentPage == splashData.length - 1
+                        ? "Get Started"
+                        : "Get Started",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
 class WhiteCurveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

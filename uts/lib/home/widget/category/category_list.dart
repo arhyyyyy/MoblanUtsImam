@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/data/models/category.dart';
 import 'package:uts/home/widget/HomeWidget/featured_grid.dart';
 
 class CategoryList extends StatelessWidget {
@@ -6,22 +7,12 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> categories = [
-      {'icon': Icons.eco, 'title': "Vegetables", 'color': Colors.green},
-      {'icon': Icons.apple, 'title': "Fruits", 'color': Colors.redAccent},
-      {'icon': Icons.local_cafe, 'title': "Beverages", 'color': Colors.orange},
-      {'icon': Icons.inventory, 'title': "Grocery", 'color': Colors.blue},
-      {'icon': Icons.cookie, 'title': "Edible oil", 'color': Colors.purple},
-      {'icon': Icons.home, 'title': "Household", 'color': Colors.teal},
-    ];
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: categories.map((item) {
           return GestureDetector(
             onTap: () {
-              // Buka FeaturedGrid sesuai kategori
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -56,10 +47,9 @@ class CategoryList extends StatelessWidget {
                       color: item['color'].withOpacity(0.15),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      item['icon'],
-                      color: item['color'],
-                      size: 30,
+                    child: Center(
+                      // ✅ Panggil fungsi icon dari file data
+                      child: item['icon'](item['color']),
                     ),
                   ),
                   const SizedBox(height: 5),

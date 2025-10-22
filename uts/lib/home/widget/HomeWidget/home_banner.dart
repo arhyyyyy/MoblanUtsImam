@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/theme/colors.dart';
 
 class HomeBanner extends StatefulWidget {
   const HomeBanner({super.key});
@@ -19,8 +20,19 @@ class _HomeBannerState extends State<HomeBanner> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 250,
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .1),
+            blurRadius: 6,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
           PageView.builder(
@@ -30,51 +42,60 @@ class _HomeBannerState extends State<HomeBanner> {
               setState(() => _currentIndex = index);
             },
             itemBuilder: (context, index) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Image.asset(_images[index], fit: BoxFit.cover),
-                    Positioned(
-                      left: 16,
-                      bottom: 20,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            '20% off on your\nfirst purchase',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
+              return Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.asset(
+                    _images[index],
+                    fit: BoxFit.cover,
+                  ),
+                  Container(
+                    color: AppColors.textDark.withValues(alpha: .25),
+                  ),
+                  Positioned(
+                    left: 20,
+                    bottom: 35,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          '20% off on your\nfirst purchase',
+                          style: TextStyle(
+                            color: AppColors.textDark,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            height: 1.3,
                           ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: List.generate(
-                              _images.length,
-                              (dotIndex) => AnimatedContainer(
-                                duration: const Duration(milliseconds: 250),
-                                margin: const EdgeInsets.only(right: 6),
-                                height: 8,
-                                width: _currentIndex == dotIndex ? 18 : 8,
-                                decoration: BoxDecoration(
-                                  color: _currentIndex == dotIndex
-                                      ? Colors.green
-                                      : Colors.grey.shade400,
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
+          ),
+          Positioned(
+            bottom: 12,
+            left: 0,
+            right: 250,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _images.length,
+                (index) => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  height: 8,
+                  width: _currentIndex == index ? 18 : 8,
+                  decoration: BoxDecoration(
+                    color: _currentIndex == index
+                        ? AppColors.primary
+                        : Colors.white.withValues(alpha: .5),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
