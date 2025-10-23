@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uts/home/pages/order_succes_page.dart';
 import 'package:uts/theme/colors.dart';
 
 class TrackOrderPage extends StatelessWidget {
@@ -56,7 +57,13 @@ class TrackOrderPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new,
               color: AppColors.textDark, size: 18),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            {
+            Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => const OrderSuccessPage())
+            );
+          };
+          },
         ),
       ),
       body: SingleChildScrollView(

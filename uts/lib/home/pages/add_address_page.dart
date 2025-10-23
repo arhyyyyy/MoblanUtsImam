@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uts/home/pages/checkout_page.dart';
 import 'package:uts/home/pages/payment_method_page.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -27,7 +28,13 @@ class _AddAddressPageState extends State<AddAddressPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios,
               color: AppColors.textDark, size: 20),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            {
+            Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => const CheckOutPage())
+            );
+          }
+          },
         ),
         title: Text(
           "Shipping Address",
@@ -42,7 +49,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Column(
             children: [
-              // ======= Progress Stepper =======
               SizedBox(
                 height: 60,
                 child: Stack(
@@ -72,8 +78,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // ======= Form =======
               Expanded(
                 child: Form(
                   key: _formKey,
@@ -116,8 +120,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   ),
                 ),
               ),
-
-              // ======= Button (raised a bit) =======
               Padding(
                 padding: const EdgeInsets.only(bottom: 15, top: 5),
                 child: GestureDetector(
@@ -168,7 +170,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
     );
   }
 
-  // ======= Step Circle Widget =======
   Widget _buildStepCircle(int number, String label,
       {bool active = false, bool completed = false}) {
     Color color;
@@ -210,7 +211,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
     );
   }
 
-  // ======= Text Field =======
   Widget _buildTextField(IconData icon, String hint) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -231,7 +231,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
     );
   }
 
-  // ======= Dropdown Field =======
   Widget _buildDropdownField(IconData icon, String hint) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),

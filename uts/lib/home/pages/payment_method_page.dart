@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uts/home/pages/add_address_page.dart';
 import 'package:uts/home/pages/order_succes_page.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -136,7 +137,13 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new,
               size: 18, color: AppColors.textDark),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            {
+            Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => const AddAddressPage())
+            );
+          }
+          },
         ),
       ),
       body: SingleChildScrollView(

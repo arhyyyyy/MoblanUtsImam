@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:uts/auth/login.dart'; // sesuaikan nama file login page kamu
+import 'package:uts/auth/login.dart'; 
 import 'package:uts/theme/colors.dart';
 
 class WelcomeFooter extends StatelessWidget {

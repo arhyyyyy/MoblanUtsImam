@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uts/home/pages/payment_method_page.dart';
 import 'package:uts/home/pages/track_order_page.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -16,7 +17,13 @@ class OrderSuccessPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new,
               size: 20, color: AppColors.textDark),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            {
+            Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => const PaymentMethodPage())
+            );
+          }
+          },
         ),
         centerTitle: true,
         title: Text(

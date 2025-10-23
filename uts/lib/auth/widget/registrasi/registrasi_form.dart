@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/auth/verify.dart';
 import 'package:uts/auth/widget/email_field.dart';
 import 'package:uts/auth/widget/password_filed.dart';
 import 'package:uts/auth/widget/registrasi/login_link_text.dart';
@@ -52,7 +53,7 @@ class RegisterForm extends StatelessWidget {
         onPressed: () {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(builder: (context) => const VerifyNumberPage()),
             (route) => false,
           );
         },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/auth/registrasi.dart';
 import 'package:uts/auth/verify.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -82,7 +83,7 @@ class WelcomeButtons extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const VerifyNumberPage(),
+                      builder: (context) => const RegistrasiPage(),
                     ),
                   );
                 },

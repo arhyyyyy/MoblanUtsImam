@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/cart/pages/shopping_cart_page.dart';
 import 'package:uts/home/pages/add_address_page.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -51,7 +52,13 @@ class _CheckOutPageState extends State<CheckOutPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios,
               color: AppColors.textDark, size: 20),
-          onPressed: () => Navigator.pop(context),
+          onPressed: (){
+            {
+            Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => const ShoppingCartPage())
+            );
+          }
+          },
         ),
       ),
       body: SafeArea(
