@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:uts/auth/welcome_page.dart';
+import 'package:uts/splash/splashscreen2.dart';
 import 'package:uts/theme/colors.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -71,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _timer?.cancel(); // stop auto-slide
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const WelcomePage()),
+      MaterialPageRoute(builder: (_) => const SplashScreenDua()),
     );
   }
 

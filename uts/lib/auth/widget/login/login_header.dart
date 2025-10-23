@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/auth/welcome_page.dart';
 import 'package:uts/splash/splashscreen.dart';
 
 class LoginHeader extends StatelessWidget {
@@ -42,7 +43,7 @@ class LoginHeader extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SplashScreen(),
+                  builder: (context) => const WelcomePage(),
                 ),
               );
             },

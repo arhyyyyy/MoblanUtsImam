@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uts/data/providers/cart_provider.dart';
 import 'package:uts/splash/splashscreen2.dart';
+import 'package:uts/splash/splashscreen3.dart';
 import 'package:uts/theme/theme.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: appTheme,
       debugShowCheckedModeBanner: false,
-      home: const SplashScreenDua(),
+      home: const SplashScreenWelcome(),
     );
   }
 }

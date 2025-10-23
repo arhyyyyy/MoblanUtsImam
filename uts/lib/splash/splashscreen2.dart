@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:uts/auth/welcome_page.dart';
 import 'package:uts/splash/splashscreen.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -62,10 +63,10 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
   }
 
   void _goToNext() {
-    _timer?.cancel(); // stop auto-slide
+    _timer?.cancel();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const SplashScreen()),
+      MaterialPageRoute(builder: (_) => const WelcomePage()),
     );
   }
 
@@ -73,7 +74,7 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
     _timer?.cancel();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const SplashScreen()),
+      MaterialPageRoute(builder: (_) => const WelcomePage()),
     );
   }
 
@@ -92,7 +93,7 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
                 },
                 itemCount: splashData.length,
                 physics:
-                    const NeverScrollableScrollPhysics(), // disable geser manual
+                    const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   final item = splashData[index];
                   return Padding(
@@ -161,7 +162,7 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: _goToNext, // langsung ke SplashScreen
+                    onPressed: _goToNext,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
