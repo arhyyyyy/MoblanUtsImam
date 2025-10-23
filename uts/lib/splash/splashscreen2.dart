@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:uts/splash/splashscreen.dart';
 import 'package:uts/theme/colors.dart';
@@ -12,6 +13,7 @@ class SplashScreenDua extends StatefulWidget {
 class _SplashScreenDuaState extends State<SplashScreenDua> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
+  Timer? _timer;
 
   final List<Map<String, String>> splashData = [
     {
@@ -34,21 +36,41 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
     },
   ];
 
-  void _nextPage() {
-    if (_currentIndex < splashData.length - 1) {
-      _pageController.nextPage(
-        duration: const Duration(milliseconds: 400),
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_currentIndex < splashData.length - 1) {
+        _currentIndex++;
+      } else {
+        _currentIndex = 0; // balik lagi ke awal (loop)
+      }
+
+      _pageController.animateToPage(
+        _currentIndex,
+        duration: const Duration(milliseconds: 600),
         curve: Curves.easeInOut,
       );
-    } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const SplashScreen()),
-      );
-    }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _goToNext() {
+    _timer?.cancel(); // stop auto-slide
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const SplashScreen()),
+    );
   }
 
   void _skip() {
+    _timer?.cancel();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const SplashScreen()),
@@ -69,19 +91,19 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
                   setState(() => _currentIndex = index);
                 },
                 itemCount: splashData.length,
+                physics:
+                    const NeverScrollableScrollPhysics(), // disable geser manual
                 itemBuilder: (context, index) {
+                  final item = splashData[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          splashData[index]['image']!,
-                          height: 300,
-                        ),
+                        Image.asset(item['image']!, height: 300),
                         const SizedBox(height: 30),
                         Text(
-                          splashData[index]['title']!,
+                          item['title']!,
                           style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -91,7 +113,7 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          splashData[index]['desc']!,
+                          item['desc']!,
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
@@ -104,6 +126,7 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
                 },
               ),
             ),
+
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -138,20 +161,20 @@ class _SplashScreenDuaState extends State<SplashScreenDua> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: _nextPage,
+                    onPressed: _goToNext, // langsung ke SplashScreen
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
                     ),
-                    child: Text(
-                      _currentIndex == splashData.length - 1
-                          ? "Get Started"
-                          : "Next",
-                      style: const TextStyle(color: Colors.white),
+                    child: const Text(
+                      "Get Started",
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ],

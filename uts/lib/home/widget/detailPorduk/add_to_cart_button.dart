@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uts/cart/pages/shopping_cart_page.dart';
+import 'package:uts/data/providers/cart_provider.dart';
 import 'package:uts/theme/colors.dart';
-
 
 class AddToCartButton extends StatelessWidget {
   final String nama;
@@ -9,6 +10,7 @@ class AddToCartButton extends StatelessWidget {
   final String gambar;
   final int jumlah;
   final Color? backgroundColor;
+  final VoidCallback onAdd;
 
   const AddToCartButton({
     super.key,
@@ -16,11 +18,14 @@ class AddToCartButton extends StatelessWidget {
     required this.harga,
     required this.gambar,
     required this.jumlah,
-    this.backgroundColor, required Null Function() onAdd,
+    this.backgroundColor,
+    required this.onAdd,
   });
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+
     return SizedBox(
       width: double.infinity,
       height: 55,
@@ -34,9 +39,18 @@ class AddToCartButton extends StatelessWidget {
           shadowColor: Colors.transparent,
         ),
         onPressed: () {
+          cartProvider.addToCart(nama, harga, jumlah, gambar);
+          onAdd();
           Navigator.push(
             context,
-            MaterialPageBuilder(),
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => const ShoppingCartPage(),
+              transitionsBuilder: (_, animation, __, child) {
+                final tween = Tween(begin: const Offset(1, 0), end: Offset.zero)
+                    .chain(CurveTween(curve: Curves.easeInOut));
+                return SlideTransition(position: animation.drive(tween), child: child);
+              },
+            ),
           );
         },
         child: Ink(
@@ -73,31 +87,6 @@ class AddToCartButton extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  PageRouteBuilder MaterialPageBuilder() {
-    return PageRouteBuilder(
-      pageBuilder: (_, __, ___) => ShoppingCartPage(
-        cartItems: [
-          {
-            "name": nama,
-            "weight": "1 pcs",
-            "price": double.tryParse(
-                    harga.replaceAll(RegExp(r'[^0-9.]'), '')) ??
-                0.0,
-            "quantity": jumlah,
-            "image": gambar,
-            "circleColor": backgroundColor ?? Colors.green.shade50,
-          },
-        ],
-      ),
-      transitionsBuilder: (_, animation, __, child) {
-        final tween = Tween(begin: const Offset(1, 0), end: Offset.zero)
-            .chain(CurveTween(curve: Curves.easeInOut));
-        return SlideTransition(position: animation.drive(tween), child: child);
-      },
     );
   }
 }

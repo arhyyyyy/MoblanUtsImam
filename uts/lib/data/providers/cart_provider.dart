@@ -25,6 +25,26 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void incrementQuantity(String name) {
+    final index = _cartItems.indexWhere((item) => item["name"] == name);
+    if (index >= 0) {
+      _cartItems[index]["quantity"]++;
+      notifyListeners();
+    }
+  }
+
+  void decrementQuantity(String name) {
+    final index = _cartItems.indexWhere((item) => item["name"] == name);
+    if (index >= 0) {
+      if (_cartItems[index]["quantity"] > 1) {
+        _cartItems[index]["quantity"]--;
+      } else {
+        _cartItems.removeAt(index);
+      }
+      notifyListeners();
+    }
+  }
+
   void clearCart() {
     _cartItems.clear();
     notifyListeners();

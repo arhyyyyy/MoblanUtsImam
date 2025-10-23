@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uts/data/models/product_model.dart';
 import 'package:uts/data/models/product_data.dart';
+import 'package:uts/data/providers/cart_provider.dart';
 import 'package:uts/home/pages/home.page.dart';
-import 'package:uts/home/widget/produk/product_cart.dart';
+import 'package:uts/home/pages/product_cart_page.dart';
+import 'package:uts/home/widget/produk/detail_product_page.dart';
 
 class FeaturedProductPage extends StatefulWidget {
   const FeaturedProductPage({super.key});
@@ -12,7 +15,6 @@ class FeaturedProductPage extends StatefulWidget {
 }
 
 class _FeaturedProductPageState extends State<FeaturedProductPage> {
-  final List<Map<String, dynamic>> cartItems = [];
   late List<ProductModel> featuredProducts;
 
   @override
@@ -39,6 +41,8 @@ class _FeaturedProductPageState extends State<FeaturedProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: AppBar(
@@ -55,18 +59,13 @@ class _FeaturedProductPageState extends State<FeaturedProductPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pushAndRemoveUntil(context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
-                (route) => false);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+              (route) => false,
+            );
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.tune, color: Colors.black),
-            onPressed: () {},
-          ),
-          const SizedBox(width: 6),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -82,7 +81,14 @@ class _FeaturedProductPageState extends State<FeaturedProductPage> {
             final product = featuredProducts[index];
             return ProductCard(
               product: product,
-              cartItems: cartItems,
+              onAdd: () {
+                cartProvider.addToCart(
+                  product.name,
+                  product.price,
+                  1,
+                  product.image,
+                );
+              },
             );
           },
         ),

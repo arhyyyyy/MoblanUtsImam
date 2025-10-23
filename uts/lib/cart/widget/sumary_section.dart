@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/home/pages/checkout_page.dart';
 import '../../theme/colors.dart';
 
 class SummarySection extends StatelessWidget {
@@ -14,7 +15,7 @@ class SummarySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -68,12 +69,11 @@ class SummarySection extends StatelessWidget {
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
           ),
-          onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Checkout berhasil! (Simulasi)"),
-              backgroundColor: AppColors.primary,
-            ),
-          ),
+          onPressed: () {
+            Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => const CheckOutPage())
+            );
+          },
           child: Ink(
             decoration: BoxDecoration(
               gradient: const LinearGradient(
@@ -81,7 +81,7 @@ class SummarySection extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
             ),
             child: const Center(
               child: Text("Checkout",

@@ -36,14 +36,14 @@ class ProfileHeader extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         const Text(
-          "Olivia Austin",
+          "M Imam Afwan Hasanudin",
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 18,
           ),
         ),
         const Text(
-          "oliviaaustin@gmail.com",
+          "imam@gmail.com",
           style: TextStyle(color: Colors.grey, fontSize: 13),
         ),
       ],

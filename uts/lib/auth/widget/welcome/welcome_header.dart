@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uts/home/pages/favorit/favorite.dart';
+import 'package:uts/splash/splashscreen2.dart';
 import 'package:uts/theme/colors.dart';
 
 class WelcomeHeader extends StatelessWidget {
@@ -21,7 +23,14 @@ class WelcomeHeader extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: (){
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SplashScreenDua(),
+                    ),
+                  );
+                  },
                   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
                 ),
                 const Spacer(),

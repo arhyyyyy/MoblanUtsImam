@@ -1,40 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uts/cart/widget/cart_item_widget.dart';
 import 'package:uts/cart/widget/empty_cart_widget.dart';
 import 'package:uts/cart/widget/sumary_section.dart';
+import 'package:uts/data/providers/cart_provider.dart';
 import 'package:uts/home/pages/home.page.dart';
-import '../../theme/colors.dart';
+import 'package:uts/theme/colors.dart';
 
-class ShoppingCartPage extends StatefulWidget {
-  final List<Map<String, dynamic>> cartItems;
-  const ShoppingCartPage({super.key, this.cartItems = const []});
-
-  @override
-  State<ShoppingCartPage> createState() => _ShoppingCartPageState();
-}
-
-class _ShoppingCartPageState extends State<ShoppingCartPage> {
-  late List<Map<String, dynamic>> cartItems;
-
-  @override
-  void initState() {
-    super.initState();
-    cartItems = List.from(widget.cartItems);
-  }
-
-  void increment(int i) => setState(() => cartItems[i]["quantity"]++);
-  void decrement(int i) => setState(() {
-        if (cartItems[i]["quantity"] > 1) cartItems[i]["quantity"]--;
-      });
-  void remove(int i) => setState(() => cartItems.removeAt(i));
-
-  double get subtotal => cartItems.fold(
-      0, (sum, item) => sum + (item["price"] * item["quantity"]));
-  double get shipping => cartItems.isEmpty ? 0 : 1.6;
-  double get total => subtotal + shipping;
+class ShoppingCartPage extends StatelessWidget {
+  const ShoppingCartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItems = cartProvider.cartItems;
+
+    double subtotal = cartItems.fold(
+      0,
+      (sum, item) => sum + (item["price"] * item["quantity"]),
+    );
+    double shipping = cartItems.isEmpty ? 0 : 1.6;
+    double total = subtotal + shipping;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: AppBar(
@@ -47,9 +34,13 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             MaterialPageRoute(builder: (_) => const HomePage()),
           ),
         ),
-        title: const Text("Shopping Cart",
-            style: TextStyle(
-                color: AppColors.textDark, fontWeight: FontWeight.bold)),
+        title: const Text(
+          "Shopping Cart",
+          style: TextStyle(
+            color: AppColors.textDark,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
       body: cartItems.isEmpty
@@ -61,12 +52,18 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     itemCount: cartItems.length,
-                    itemBuilder: (context, index) => CartItemWidget(
-                      item: cartItems[index],
-                      onIncrement: () => increment(index),
-                      onDecrement: () => decrement(index),
-                      onRemove: () => remove(index),
-                    ),
+                    itemBuilder: (context, index) {
+                      final item = cartItems[index];
+                      return CartItemWidget(
+                        item: item,
+                        onIncrement: () =>
+                            cartProvider.incrementQuantity(item["name"]),
+                        onDecrement: () =>
+                            cartProvider.decrementQuantity(item["name"]),
+                        onRemove: () =>
+                            cartProvider.removeFromCart(item["name"]),
+                      );
+                    },
                   ),
                 ),
                 SummarySection(

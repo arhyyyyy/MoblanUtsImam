@@ -11,7 +11,7 @@ class ProductModel {
   final double rating;
   final int ulasan;
   final Color? backgroundColor;
-  final String? discount;
+  final double? discount;
 
   ProductModel({
     required this.id,

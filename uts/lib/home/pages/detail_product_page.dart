@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uts/cart/pages/shopping_cart_page.dart';
 import 'package:uts/data/models/product_model.dart';
+import 'package:uts/data/providers/cart_provider.dart';
 import 'package:uts/home/widget/detailPorduk/add_to_cart_button.dart';
 import 'package:uts/home/widget/detailPorduk/detail_header.dart';
 import 'package:uts/home/widget/detailPorduk/detail_info_section.dart';
@@ -70,7 +72,6 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       onChanged: (val) => setState(() => jumlah = val),
                     ),
                     const SizedBox(height: 25),
-                    // Tombol Add to Cart
                     AddToCartButton(
                       nama: product.name,
                       harga: product.price,
@@ -78,23 +79,18 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       jumlah: jumlah,
                       backgroundColor: bgColor,
                       onAdd: () {
-                        final cartItem = {
-                          "id": product.id,
-                          "name": product.name,
-                          "weight": product.unit,
-                          "price": double.tryParse(
-                                  product.price.replaceAll("\$", "")) ??
-                              0,
-                          "image": product.image,
-                          "circleColor": bgColor,
-                          "quantity": jumlah,
-                        };
-
+                        final cartProvider =
+                            Provider.of<CartProvider>(context, listen: false);
+                        cartProvider.addToCart(
+                          product.name,
+                          product.price,
+                          jumlah,
+                          product.image,
+                        );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) =>
-                                ShoppingCartPage(cartItems: [cartItem]),
+                            builder: (_) => const ShoppingCartPage(),
                           ),
                         );
                       },

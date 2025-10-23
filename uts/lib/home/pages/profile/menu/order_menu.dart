@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uts/home/pages/profile/profile.dart';
+import 'package:uts/theme/colors.dart';
 
 class MyOrderPage extends StatefulWidget {
   const MyOrderPage({super.key});
@@ -68,7 +69,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.inventory_2_outlined,
-                  color: Color(0xFF7EE55B), size: 28),
+                  color: AppColors.primaryDark, size: 28),
             ),
             title: const Text(
               "Order #90897",
@@ -83,7 +84,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                 _isExpanded[index]
                     ? Icons.keyboard_arrow_up
                     : Icons.keyboard_arrow_down,
-                color: const Color(0xFF7EE55B),
+                color: AppColors.primaryDark,
               ),
               onPressed: () {
                 setState(() {
@@ -141,7 +142,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
               width: 12,
               height: 12,
               decoration: BoxDecoration(
-                color: active ? const Color(0xFF7EE55B) : Colors.grey[300],
+                color: active ? AppColors.primaryDark : Colors.grey[300],
                 shape: BoxShape.circle,
               ),
             ),
@@ -149,7 +150,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
               Container(
                 width: 2,
                 height: 30,
-                color: active ? const Color(0xFF7EE55B) : Colors.grey[300],
+                color: active ? AppColors.primaryDark : Colors.grey[300],
               ),
           ],
         ),

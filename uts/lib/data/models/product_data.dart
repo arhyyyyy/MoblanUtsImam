@@ -15,6 +15,9 @@ class ProductData {
   ];
 
   static List<ProductModel> getProductsByCategory(String category) {
+    const loremText =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
     switch (category) {
       case 'Fruits':
         return [
@@ -24,7 +27,7 @@ class ProductData {
             price: '\$3.21',
             unit: 'dozen',
             image: 'images/Peach.png',
-            description: 'Fresh Apple, great to eat or make juice',
+            description: loremText,
             isNew: true,
             backgroundColor: Colors.redAccent,
           ),
@@ -34,7 +37,7 @@ class ProductData {
             price: '\$8.00',
             unit: '5.2 lbs',
             image: 'images/Apel.png',
-            description: 'Sweet and juicy fresh peaches',
+            description: loremText,
             isNew: true,
             backgroundColor: Colors.red,
           ),
@@ -44,7 +47,7 @@ class ProductData {
             price: '\$7.00',
             unit: '2.0 lbs',
             image: 'images/Alvokat.png',
-            description: 'Rich, creamy avocados — ideal for smoothies or salads',
+            description: loremText,
             isNew: true,
             backgroundColor: const Color(0xFF6DC36E),
           ),
@@ -54,7 +57,7 @@ class ProductData {
             price: '\$7.00',
             unit: '2.0 lbs',
             image: 'images/Lemon.png',
-            description: 'Lemon, good for your food',
+            description: loremText,
             isNew: true,
             backgroundColor: const Color(0xFF6DC36E),
           ),
@@ -67,7 +70,7 @@ class ProductData {
             price: '\$2.50',
             unit: '1.0 lbs',
             image: 'images/Tomat.png',
-            description: 'Fresh tomatoes for salads and cooking',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.redAccent[200],
           ),
@@ -77,10 +80,9 @@ class ProductData {
             price: '\$5.00',
             unit: '1.5 lbs',
             image: 'images/broccoli.png',
-            description: 'Fresh vagetables',
-            isNew: true,
+            description: loremText,
             backgroundColor: Colors.green,
-            discount: '5',
+            discount: 5,
           ),
           ProductModel(
             id: '7',
@@ -88,7 +90,7 @@ class ProductData {
             price: '\$2.00',
             unit: '1 lbs',
             image: 'images/pakcoy.png',
-            description: 'Fresh vagetables',
+            description: loremText,
             isNew: true,
             backgroundColor: Colors.green,
           ),
@@ -98,7 +100,7 @@ class ProductData {
             price: '\$3.00',
             unit: '1.5 lbs',
             image: 'images/wortel.png',
-            description: 'Fresh vagetables',
+            description: loremText,
             isNew: true,
             backgroundColor: Colors.orange,
           ),
@@ -111,7 +113,7 @@ class ProductData {
             price: '\$4.00',
             unit: '1 L',
             image: 'images/OrangeJuice.png',
-            description: 'Freshly juice every day',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.orange,
           ),
@@ -121,103 +123,105 @@ class ProductData {
             price: '\$4.00',
             unit: '1 L',
             image: 'images/watermelonjuice.png',
-            description: 'Freshly juice every day',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.redAccent[100],
           ),
         ];
-        case 'Grocery':
-        return[
+      case 'Grocery':
+        return [
           ProductModel(
-            id: '10',
+            id: '11',
             name: 'Shampoo',
             price: '\$2.00',
             unit: '1 L',
             image: 'images/shampoo.png',
-            description: 'Shampoo for your hair',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.grey,
           ),
           ProductModel(
-            id: '11',
+            id: '12',
             name: 'Body Soap',
             price: '\$2.00',
             unit: '1 L',
             image: 'images/soap.png',
-            description: 'Make your body clean',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.orange,
           ),
         ];
-        case 'Edible oil':
-        return[
+      case 'Edible oil':
+        return [
           ProductModel(
-            id: '12',
+            id: '13',
             name: 'Fortune Oil',
             price: '\$12.00',
-            unit: '1,5 L',
+            unit: '1.5 L',
             image: 'images/minyakgoreng.png',
-            description: 'cooking oil with premium ingredients',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.yellow,
           ),
           ProductModel(
-            id: '13',
+            id: '14',
             name: 'Sania Oil',
             price: '\$10.00',
-            unit: '1,5 L',
+            unit: '1.5 L',
             image: 'images/minyakgoreng2.png',
-            description: 'cooking oil with premium ingredients',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.yellowAccent,
+            discount: 20,
           ),
         ];
-        case 'Household':
-        return[
-        ProductModel(
-          id: '14',
+      case 'Household':
+        return [
+          ProductModel(
+            id: '15',
             name: 'AC',
             price: '\$250.00',
             unit: '1 Unit',
             image: 'images/AC.png',
-            description: 'AC 1 PK',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.blueGrey,
+            discount: 55,
           ),
-        ProductModel(
-          id: '15',
+          ProductModel(
+            id: '16',
             name: 'Rice Cooker',
             price: '\$40.00',
             unit: '1 Unit',
             image: 'images/ricecooker.png',
-            description: 'For make rice',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.blueGrey,
-          )
-        ]; 
-        case 'Babycare':
-        return[
-        ProductModel(
-          id: '16',
+          ),
+        ];
+      case 'Babycare':
+        return [
+          ProductModel(
+            id: '17',
             name: 'Diaper',
-            price: '\$250.00',
+            price: '\$20.00',
             unit: '1',
             image: 'images/popok.png',
-            description: 'Diaper for baby',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.blue,
           ),
-        ProductModel(
-          id: '17',
+          ProductModel(
+            id: '18',
             name: 'Milk',
             price: '\$30.00',
             unit: '600 ml',
             image: 'images/susu.png',
-            description: 'Milk for kids',
+            description: loremText,
             isNew: false,
             backgroundColor: Colors.blueAccent,
-          )
-        ]; 
+          ),
+        ];
       default:
         return [];
     }

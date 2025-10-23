@@ -3,6 +3,7 @@ import 'package:uts/cart/pages/shopping_cart_page.dart';
 import 'package:uts/home/pages/favorit/Favorite.dart';
 import 'package:uts/home/pages/home.page.dart';
 import 'package:uts/home/pages/profile/profile.dart';
+import 'package:uts/theme/colors.dart';
 
 class FloatingCartButton extends StatefulWidget {
   final int initialIndex;
@@ -46,7 +47,7 @@ class _FloatingCartButtonState extends State<FloatingCartButton> {
       children: [
         Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: AppColors.background,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25),
               topRight: Radius.circular(25),
@@ -63,7 +64,7 @@ class _FloatingCartButtonState extends State<FloatingCartButton> {
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.background,
             elevation: 0,
             selectedFontSize: 0,
             unselectedFontSize: 0,
@@ -72,7 +73,7 @@ class _FloatingCartButtonState extends State<FloatingCartButton> {
                 icon: Icon(
                   Icons.home_outlined,
                   color: _selectedIndex == 0
-                      ? const Color(0xFF4CAF50)
+                      ? AppColors.primaryDark
                       : Colors.grey,
                 ),
                 label: '',
@@ -81,7 +82,7 @@ class _FloatingCartButtonState extends State<FloatingCartButton> {
                 icon: Icon(
                   Icons.person_outline,
                   color: _selectedIndex == 1
-                      ? const Color(0xFF4CAF50)
+                      ? AppColors.primaryDark
                       : Colors.grey,
                 ),
                 label: '',
@@ -115,7 +116,7 @@ class _FloatingCartButtonState extends State<FloatingCartButton> {
               height: 60,
               width: 60,
               decoration: const BoxDecoration(
-                color: Color(0xFF4CAF50),
+                color: AppColors.primaryDark,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(

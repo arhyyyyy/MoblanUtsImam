@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:uts/auth/login.dart';
 import 'package:uts/auth/welcome_page.dart';
 import 'package:uts/theme/colors.dart';
 
@@ -13,6 +13,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+  Timer? _timer;
 
   final List<Map<String, String>> splashData = [
     {
@@ -41,18 +42,33 @@ class _SplashScreenState extends State<SplashScreen> {
     },
   ];
 
-  void _nextPage() {
-    if (_currentPage < splashData.length - 1) {
-      _pageController.nextPage(
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_currentPage < splashData.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
         duration: const Duration(milliseconds: 600),
         curve: Curves.easeInOutCubic,
       );
-    } else {
-      _goToLogin();
-    }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
   }
 
   void _goToLogin() {
+    _timer?.cancel(); // stop auto-slide
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const WelcomePage()),
@@ -71,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
               setState(() => _currentPage = index);
             },
             itemCount: splashData.length,
-            physics: const BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final item = splashData[index];
               return Stack(
@@ -88,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: ClipPath(
                       clipper: WhiteCurveClipper(),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.45,
+                        height: MediaQuery.of(context).size.height * 0.48,
                         color: Colors.white,
                       ),
                     ),
@@ -96,12 +112,13 @@ class _SplashScreenState extends State<SplashScreen> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 90),
+                      padding: const EdgeInsets.only(bottom: 100),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 32),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 32),
                             child: Column(
                               children: [
                                 Text(
@@ -133,16 +150,18 @@ class _SplashScreenState extends State<SplashScreen> {
                             children: List.generate(
                               splashData.length,
                               (index) => AnimatedContainer(
-                                duration: const Duration(milliseconds: 350),
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 4),
+                                duration:
+                                    const Duration(milliseconds: 350),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 4),
                                 height: 8,
                                 width: _currentPage == index ? 18 : 8,
                                 decoration: BoxDecoration(
                                   color: _currentPage == index
                                       ? const Color(0xFF56AB2F)
                                       : Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius:
+                                      BorderRadius.circular(12),
                                 ),
                               ),
                             ),
@@ -155,12 +174,15 @@ class _SplashScreenState extends State<SplashScreen> {
               );
             },
           ),
+
+          // === BUTTON GET STARTED ===
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 30, left: 32, right: 32),
+              padding:
+                  const EdgeInsets.only(bottom: 30, left: 32, right: 32),
               child: GestureDetector(
-                onTap: _nextPage,
+                onTap: _goToLogin, // tekan langsung ke WelcomePage
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 400),
                   curve: Curves.easeOutCubic,
@@ -177,18 +199,18 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF56AB2F).withValues(alpha: .3),
+                        color: const Color(0xFF56AB2F)
+                            .withValues(alpha: .3),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),
                     ],
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   alignment: Alignment.center,
-                  child: Text(
-                    _currentPage == splashData.length - 1
-                        ? "Get Started"
-                        : "Get Started",
-                    style: const TextStyle(
+                  child: const Text(
+                    "Get Started",
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

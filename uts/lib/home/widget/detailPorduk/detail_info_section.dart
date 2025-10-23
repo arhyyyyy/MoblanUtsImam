@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts/home/pages/review_page.dart';
 import 'package:uts/theme/colors.dart';
 
 class DetailInfoSection extends StatelessWidget {
@@ -17,20 +18,53 @@ class DetailInfoSection extends StatelessWidget {
     required this.ulasan,
   });
 
-  List<Widget> _buildStars(double rating) {
+  List<Widget> _buildStars(BuildContext context, double rating) {
     final List<Widget> stars = [];
     final int fullStars = rating.floor();
     final bool hasHalfStar = rating - fullStars >= 0.5;
 
     for (int i = 0; i < fullStars; i++) {
-      stars.add(const Icon(Icons.star, color: Colors.amber, size: 18));
+      stars.add(
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ReviewPage()),
+            );
+          },
+          child: const Icon(Icons.star, color: Colors.amber, size: 18),
+        ),
+      );
     }
+
     if (hasHalfStar) {
-      stars.add(const Icon(Icons.star_half, color: Colors.amber, size: 18));
+      stars.add(
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ReviewPage()),
+            );
+          },
+          child: const Icon(Icons.star_half, color: Colors.amber, size: 18),
+        ),
+      );
     }
+
     while (stars.length < 5) {
-      stars.add(const Icon(Icons.star_border, color: Colors.amber, size: 18));
+      stars.add(
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ReviewPage()),
+            );
+          },
+          child: const Icon(Icons.star_border, color: Colors.amber, size: 18),
+        ),
+      );
     }
+
     return stars;
   }
 
@@ -41,7 +75,7 @@ class DetailInfoSection extends StatelessWidget {
       children: [
         Text(
           harga,
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.primary,
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -55,7 +89,7 @@ class DetailInfoSection extends StatelessWidget {
         const SizedBox(height: 8),
         Row(
           children: [
-            Row(children: _buildStars(rating)),
+            Row(children: _buildStars(context, rating)),
             const SizedBox(width: 6),
             Text(
               "$rating ($ulasan reviews)",

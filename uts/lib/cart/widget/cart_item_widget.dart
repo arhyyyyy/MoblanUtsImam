@@ -14,8 +14,21 @@ class CartItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String name = item["name"]?.toString() ?? "Unknown";
+    final String weight = item["weight"]?.toString() ?? "-";
+    final String imagePath = item["image"]?.toString() ?? "";
+    final double price = (item["price"] is num)
+        ? (item["price"] as num).toDouble()
+        : double.tryParse(item["price"]?.toString() ?? "0") ?? 0.0;
+    final int quantity = item["quantity"] is int
+        ? item["quantity"] as int
+        : int.tryParse(item["quantity"]?.toString() ?? "1") ?? 1;
+    final Color circleColor = item["circleColor"] is Color
+        ? item["circleColor"]
+        : Colors.green.shade50;
+
     return Dismissible(
-      key: ValueKey(item),
+      key: ValueKey(name),
       direction: DismissDirection.endToStart,
       background: Container(
         alignment: Alignment.centerRight,
@@ -48,12 +61,14 @@ class CartItemWidget extends StatelessWidget {
               height: 60,
               width: 60,
               decoration: BoxDecoration(
-                color: item["circleColor"],
+                color: circleColor,
                 shape: BoxShape.circle,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset(item["image"]),
+                child: imagePath.isNotEmpty
+                    ? Image.asset(imagePath)
+                    : const Icon(Icons.image_not_supported),
               ),
             ),
             const SizedBox(width: 12),
@@ -61,16 +76,17 @@ class CartItemWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item["name"],
+                  Text(name,
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.black87)),
                   const SizedBox(height: 3),
-                  Text(item["weight"],
-                      style: const TextStyle(color: Colors.grey, fontSize: 13)),
+                  Text(weight,
+                      style:
+                          const TextStyle(color: Colors.grey, fontSize: 13)),
                   const SizedBox(height: 6),
-                  Text("\$${item["price"].toStringAsFixed(2)}",
+                  Text("\$${price.toStringAsFixed(2)}",
                       style: const TextStyle(
                           color: Colors.green, fontWeight: FontWeight.bold)),
                 ],
@@ -81,7 +97,7 @@ class CartItemWidget extends StatelessWidget {
                 IconButton(
                     onPressed: onIncrement,
                     icon: const Icon(Icons.add, color: Colors.green)),
-                Text("${item["quantity"]}",
+                Text("$quantity",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16)),
                 IconButton(
